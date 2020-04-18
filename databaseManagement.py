@@ -8,8 +8,8 @@ import json
 HOST = cfg.envVariables['host']
 MASTER_KEY = cfg.envVariables['master_key']
 
-
 app = Flask(__name__)
+
 class ContextManagement:
     def __init__(self, obj):
         self.obj = obj
@@ -97,17 +97,20 @@ def dbOperations():
             else:
                 return("Invalid Operation") 
         except errors.HTTPFailure as e:
-                response = 'run_sample has caught an error. {0}'.format(e)
+                response = 'Database management run has caught an error. {0}'.format(e)
         finally:
-             print("\n run dbOperation done")
+             print("\n run db operation done")
     return response
 
 @app.route('/health',methods=['GET'])
 def health():
-    return "Application is up"
+    return "Database management Application is up"
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
+
+
+
     
             
 
