@@ -1,0 +1,275 @@
+Health Check: 
+
+	Request: http://0.0.0.0:5000/applicationHealth
+	Response: Database Management Application Is Up
+
+Database Operations: http://0.0.0.0:5000/databaseOperations
+
+	Create Database: 
+		Request: 
+			{
+			"client":"prd",
+			"databaseId":"Products",
+			"operation":"CREATE_DATABASE"
+			}
+		Response: Database with id 'Products' created
+
+	Find Database: 
+		Request:
+			{
+			"client":"prd",
+			"databaseId":"Products",
+			"operation":"FIND_DATABASE"
+			}
+		Response: Database with id 'Products' was found
+
+	List Database: 
+		Request: 
+			{
+			"client":"prd",
+			"operation":"LIST_DATABASE"
+			}
+		Response: Products
+	
+	Delete Database: 
+		Request: 
+			{
+			"client":"prd",
+			"databaseId":"Products",
+			"operation":"DELETE_DATABASE"
+			}
+		Response: Database with id 'Products' was deleted
+
+Container Operations: http://0.0.0.0:5000/collectionOperations
+
+	Create Container: 
+		Basic:
+			Request: 
+				{
+				"client":"prd",
+				"databaseId":"Products",
+				"collectionId":"ProductDetailsBasic",
+				"subOperation":"BASIC",
+				"operation":"CREATE_CONTAINER"
+				}
+			Response: Collection with id 'ProductDetailsBasic' created
+		
+		Default Index: 
+			Request: 
+				{
+				"client":"prd",
+				"databaseId":"Products",
+				"collectionId":"ProductDetailsIndex",
+				"subOperation":"DEFAULT_INDEX",
+				"operation":"CREATE_CONTAINER"
+				}
+			Response: Collection with id 'ProductDetailsIndex' created IndexPolicy Mode - 'lazy' IndexPolicy Automatic - 'True'
+
+		Custom Throughput: 
+			Request:
+				{
+				"client":"prd",
+				"databaseId":"Products",
+				"collectionId":"ProductDetailsCustomThroughput",
+				"subOperation":"CUSTOM_THROUGHPUT",
+				"operation":"CREATE_CONTAINER"
+				}
+			Response: Collection with id 'ProductDetailsCustomThroughput' created
+		
+		Unique Keys: 
+			Request: 
+				{
+				"client":"prd",
+				"databaseId":"Products",
+				"collectionId":"ProductDetailsUniqueKeys",
+				"subOperation":"UNIQUE_KEYS",
+				"operation":"CREATE_CONTAINER"
+				}
+		     	Response: Collection with id 'ProductDetailsUniqueKeys' created Unique Key Paths - '/field1/field2', '/field3'
+
+		Partition Key: 
+			Request: 
+			   	{
+				"client":"prd",
+				"databaseId":"Products",
+				"collectionId":"ProductDetails",
+				"subOperation":"PARTITION_KEY",
+				"operation":"CREATE_CONTAINER",
+				"partitionKey":"/productName"
+				}
+			Response: Collection with id 'ProductDetails' created Partition Key - '{'paths': ['/productName'], 'kind': 'Hash'}'
+
+	Find Container
+			Request: 
+				{
+				"client":"prd",
+				"databaseId":"Products",
+				"collectionId":"ProductDetails",
+				"operation":"FIND_CONTAINER"
+				}
+			Response: Collection with id 'ProductDetails' was found
+
+
+	Offer Throughput: 
+			Request: 
+       				{
+				"client":"prd",
+				"databaseId":"Products",
+				"collectionId":"ProductDetails",
+				"operation":"OFFER_THROUGHPUT"
+				}
+			Response: Found Offer 'ME0z' for Collection 'dbs/E8wuAA==/colls/E8wuAJAlNfw=/' and its throughput is '400'
+					  Replaced Offer. Offer Throughput is now '500'
+
+        Read Container:
+		Request:
+			{
+			"client":"prd",
+			"databaseId":"Products",
+			"collectionId":"ProductDetails",
+			"operation":"READ_CONTAINER"
+			}
+		Response: Collection with id 'ProductDetails' was found, it's _self is dbs/E8wuAA==/colls/E8wuAJAlNfw=/
+
+	 List Container:
+		Request: 
+			{
+			"client":"prd",
+			"databaseId":"Products",
+			"collectionId":"ProductDetails",
+			"operation":"LIST_CONTAINER"
+			}
+		Response: 
+			ProductDetailsUniqueKeys
+			ProductDetailsBasic
+			ProductDetailsIndex
+			ProductDetailsCustomThroughput
+			ProductDetails
+
+	Delete Container: 
+		Request: 
+			{
+			"client":"prd",
+			"databaseId":"Products",
+			"collectionId":"ProductDetailsUniqueKeys",
+			"operation":"DELETE_CONTAINER"
+			}
+		Response: Collection with id 'ProductDetailsUniqueKeys' was deleted
+
+Document Operations: http://0.0.0.0:5000/documentOperations
+
+Create Document:
+	Request:
+		{
+			"client":"prd",
+			"databaseId":"Products",
+			"collectionId":"ProductDetailsUniqueKeys",
+			"operation":"CREATE_DOCUMENT",
+			"item": [
+			 {
+			 "prodId": "P001",
+			 "productName":"Azure1"
+			 },
+			 {
+			 "prodId": "P002",
+			 "productName":"Azure2"	
+			 }
+			 ]
+			}
+        Response: Item Created
+        
+        
+ Read Document: 
+
+  	Request: 
+			{
+			"client":"prd",
+			"databaseId":"Products",
+			"docId": "3d87e75f-8bb8-4e6f-aaef-099080bce167",
+			"collectionId":"ProductDetails",
+			"operation":"READ_DOCUMENT"
+			}
+ 
+          Response: 
+			[
+			{
+			"prodId": "P001",
+			"productName": "Azure1",
+			"id": "3d87e75f-8bb8-4e6f-aaef-099080bce167",
+			"_rid": "E8wuAJAlNfwBAAAAAAAAAA==",
+			"_self": "dbs/E8wuAA==/colls/E8wuAJAlNfw=/docs/E8wuAJAlNfwBAAAAAAAAAA==/",
+			"_etag": "\"11004681-0000-0200-0000-5ea0768c0000\"",
+			"_attachments": "attachments/",
+			"_ts": 1587574412
+			}
+			]
+
+Read Documents:
+  
+   	Request: 
+                    	{
+			"client":"prd",
+			"databaseId":"Products",
+			"collectionId":"ProductDetails",
+			"operation":"READ_DOCUMENTS"
+			}
+        Response:
+                [
+		{
+		"prodId": "P001",
+		"productName": "Azure1",
+		"id": "3d87e75f-8bb8-4e6f-aaef-099080bce167",
+		"_rid": "E8wuAJAlNfwBAAAAAAAAAA==",
+		"_self": "dbs/E8wuAA==/colls/E8wuAJAlNfw=/docs/E8wuAJAlNfwBAAAAAAAAAA==/",
+		"_etag": "\"11004681-0000-0200-0000-5ea0768c0000\"",
+		"_attachments": "attachments/",
+		"_ts": 1587574412
+		},
+		{
+		"prodId": "P002",
+		"productName": "Azure2",
+		"id": "83b76aee-fb0e-49c9-8d6c-c0ecfbe4f3e5",
+		"_rid": "E8wuAJAlNfwCAAAAAAAAAA==",
+		"_self": "dbs/E8wuAA==/colls/E8wuAJAlNfw=/docs/E8wuAJAlNfwCAAAAAAAAAA==/",
+		"_etag": "\"11004f81-0000-0200-0000-5ea0768c0000\"",
+		"_attachments": "attachments/",
+		"_ts": 1587574412
+		}
+		]
+
+Update Document:
+	Request:
+		   {
+			"client":"prd",
+			"collectionId":"ProductDetails",
+			"databaseId":"Products",
+			"operation":"UPDATE_DOCUMENT",
+			"docId":"3d87e75f-8bb8-4e6f-aaef-099080bce167",
+			"partitionValue":"/productName",
+			"item": {
+    				"prodId": "P00111",
+    				"productName": "Azure1",
+    				"id": "3d87e75f-8bb8-4e6f-aaef-099080bce167",
+    				"_rid": "E8wuAJAlNfwBAAAAAAAAAA==",
+   				 "_self": "dbs/E8wuAA==/colls/E8wuAJAlNfw=/docs/E8wuAJAlNfwBAAAAAAAAAA==/",
+    				"_etag": "\"11004681-0000-0200-0000-5ea0768c0000\"",
+   				 "_attachments": "attachments/",
+    				"_ts": 1587574412
+				}
+			}
+
+	Response: Success
+
+
+Delete Document: 
+	Request: 
+		{
+		"client":"prd",
+		"collectionId":"ProductDetails",
+		"databaseId":"Products",
+		"operation":"DELETE_DOCUMENT",
+		"partitionValue":"Azure1",
+		"docId":"3d87e75f-8bb8-4e6f-aaef-099080bce167"
+		}
+
+	Response: Delete Success

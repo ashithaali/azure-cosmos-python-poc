@@ -301,7 +301,7 @@ class DocumentManagement:
         return "Success"
         
 
-@app.route('/dbOperations',methods=['POST'])
+@app.route('/databaseOperations',methods=['POST'])
 def dbOperations():
     databaseJson= request.json
     operation=databaseJson["operation"]
@@ -329,6 +329,7 @@ def dbOperations():
 
 @app.route('/collectionOperations',methods=['POST'])
 def collectionOperations():
+    key=""
     databaseJson= request.json
     operation=databaseJson["operation"]
     client=databaseJson["client"]
@@ -406,9 +407,9 @@ def documentOperations():
     return response
 
 
-@app.route('/health',methods=['GET'])
+@app.route('/applicationHealth',methods=['GET'])
 def health():
-    return "Database management Application is up"
+    return "Database Management Application Is Up"
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
